@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+<listeners>
+<listener class-name="com.commerce.qa.resources.Listeners"/>
+<listener class-name="com.commerce.qa.resources.ExtentReporterNG"/>
+</listeners>
+  <test  name="Amazon">
+    <classes>
+       <class name="com.commerce.qa.test.LoginPageTest"/>   
+       <class name="com.commerce.qa.test.SearchPageTest"/>  
+       <class name="com.commerce.qa.test.CartPageTest"/> 
+     
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
