@@ -80,7 +80,7 @@ public class SearchPage {
 	}
 	
 	public String getSelectedProductDetail ()  throws InterruptedException {
-	
+		
 		try {			
 			if (pinCode != null) {
 				pinCode.click();				

@@ -16,7 +16,7 @@ public class DataFile {
 	public static long PAGE_LOAD_TIMEOUT = 10;
 	public static long IMPLICIT_WAIT = 15;
 
-	public static String TESTDATA_SHEET_PATH = "./src/main/java/com/commerce/qa/testData/DataSheet.xlsx";
+	public static String TESTDATA_SHEET_PATH = "./src/main/java/com/commerce/qa/util/DataFile.xlsx";
 
 	static Workbook book;
 

@@ -40,14 +40,14 @@ public class SearchPageTest extends AmazonAppService{
 			return data;
 	}
 	
-	@Test(priority=1,dataProvider="getDataValue")
+	@Test
 	public void getProductDetails(String ListToSearch) throws InterruptedException
 	{
 		searchObj.searchAllProduct(ListToSearch);
 		Reporter.log("Product search for the list of data in data provider excel sheet");	
 	}
 	
-	@Test(priority=2)
+	@Test
 	public void a_searchProduct() throws InterruptedException 
 	{
 		String searchProd=searchObj.searchProduct(globalConfigObj.getConfigValue("ProductToSearch"));
@@ -55,7 +55,7 @@ public class SearchPageTest extends AmazonAppService{
 		assertTrue(searchProd!=null && searchProd.equals(globalConfigObj.getConfigValue("ProductToSearch")));
 	}
 	
-	@Test(priority=3)
+	@Test
 	public void b_selectProductDetail() throws InterruptedException 
 	{
 		String productSelected=searchObj.getSelectedProductDetail();
