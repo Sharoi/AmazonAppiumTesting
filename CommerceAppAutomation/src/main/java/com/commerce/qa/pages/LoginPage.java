@@ -34,11 +34,8 @@ public class LoginPage  {
 
 	@AndroidFindBy(id = "com.amazon.mShop.android.shopping:id/action_bar_burger_icon")
 	public MobileElement homeActionIcon;
-
-	@AndroidFindBy(xpath = "//*[@text='Hello. Sign In']")
-	public MobileElement homeLogoxPath;
 	
-	@AndroidFindBy(id = "com.amazon.mShop.android.shopping:id/action_bar_home_logo")
+	@AndroidFindBy(id = "com.amazon.mShop.android.shopping:id/gno_greeting_text_view")
 	public MobileElement homeLogo;
 	
 	@AndroidFindBy(xpath = "//android.widget.Button[@text='Login']")
@@ -58,7 +55,7 @@ public class LoginPage  {
 		homeActionIcon.click();
 		
 		try {
-			if (homeLogo!=null && homeLogo.getText().contains("Sign In")) {
+			if (homeLogo.getText().contains("Sign In")) {
 				
 				Reporter.log(homeLogo.getText());
 				System.out.println("home logo text" + LogoText);
@@ -74,7 +71,7 @@ public class LoginPage  {
 				appdriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 				Thread.sleep(4000);
 				userSignInToAccount.click();
-				Thread.sleep(60000);
+				Thread.sleep(80000);
 				appdriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 				loginName = "user logged in..successful";
 				return loginName;
