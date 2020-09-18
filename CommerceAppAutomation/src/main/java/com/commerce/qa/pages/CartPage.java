@@ -93,9 +93,9 @@ public class CartPage {
 		settings.click();
 		Thread.sleep(10000);
 		signOut.click();
-		Thread.sleep(10000);
+		Thread.sleep(40000);
 	    confirmSignOut.click();
-		Thread.sleep(70000);
+		Thread.sleep(80000);
 		System.out.println("User logged out successfully");
 	}
 }

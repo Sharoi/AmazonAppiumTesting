@@ -9,8 +9,7 @@
     <classes>
        <class name="com.commerce.qa.test.LoginPageTest"/>   
        <class name="com.commerce.qa.test.SearchPageTest"/>  
-       <class name="com.commerce.qa.test.CartPageTest"/> 
-     
+       <class name="com.commerce.qa.test.CartPageTest"/>      
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
