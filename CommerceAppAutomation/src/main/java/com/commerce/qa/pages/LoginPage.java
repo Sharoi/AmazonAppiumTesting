@@ -2,8 +2,12 @@ package com.commerce.qa.pages;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import io.appium.java_client.MobileElement;
@@ -13,7 +17,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class LoginPage  {
-	
+	Logger log= Logger.getLogger(LoginPage.class);
 	private String LogoText;
 	private AndroidDriver<AndroidElement> appdriver;
 	
@@ -55,18 +59,21 @@ public class LoginPage  {
 		homeActionIcon.click();
 		
 		try {
-			if (homeLogo.getText().contains("Sign In")) {
+			if (homeLogo.getText().contains("Sign In") || homeLogo.getText() == null) {
 				
 				Reporter.log(homeLogo.getText());
-				System.out.println("home logo text" + LogoText);
+				log.info("home logo text" + LogoText);
 				homeLogo.click();
 				Thread.sleep(90000);
 				email.sendKeys(uid);
-				appdriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+				appdriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				
 				continueBtn.click();
-				System.out.println("Continue Button clicked, wait for 60s");
-				Thread.sleep(60000);
-				System.out.println("PASSWORD PAGE");
+				WebDriverWait wait = new WebDriverWait(appdriver,90);
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ap_password")));
+				log.info("Continue Button clicked, wait for 80s");
+				Thread.sleep(80000);
+				log.info("PASSWORD PAGE");
 				password.sendKeys(pwd);
 				appdriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 				Thread.sleep(4000);
@@ -79,7 +86,7 @@ public class LoginPage  {
 			}
 			else {
 				loginName = "User already logged in..Skipping login";
-				System.out.println("Skipping login...."+loginName+"["+homeLogo.getText()+"]");
+				log.info("Skipping login...."+loginName+"["+homeLogo.getText()+"]");
 				Reporter.log("\n"+loginName);
 				appdriver.navigate().back();
 				Thread.sleep(4000);
@@ -87,7 +94,7 @@ public class LoginPage  {
 				return loginName;
 			}
 		}catch (NoSuchElementException nse) {
-			System.out.println("[ERROR]:No Such Element Exception["+nse.getMessage()+"]");
+			log.warn("[ERROR]:No Such Element Exception["+nse.getMessage()+"]");
 			Reporter.log("\n"+loginName);
 			appdriver.navigate().back();
 			appdriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);

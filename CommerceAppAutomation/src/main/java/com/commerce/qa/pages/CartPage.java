@@ -3,6 +3,7 @@ package com.commerce.qa.pages;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
 import io.appium.java_client.MobileElement;
@@ -12,7 +13,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class CartPage {
-	
+	Logger log= Logger.getLogger(CartPage.class);
 	private String priceInCart;
 	private String nameInCart;
 	
@@ -62,10 +63,10 @@ public class CartPage {
 			this.nameInCart=productListCart.get(1).getText();
 			String[] splitParts = productPriceCart.get(4).getText().split(Pattern.quote("."));
 			this.priceInCart=splitParts[0].replaceAll("[^0-9]", "");	
-			System.out.println("Add2Cart:\n"+this.nameInCart+"\n["+this.priceInCart+"]");
+			log.info("Add2Cart:\n"+this.nameInCart+"\n["+this.priceInCart+"]");
 			
 		}catch (NoSuchElementException nse) {
-			System.out.println("[ERROR]:No Such Element Exception["+nse.getMessage()+"]");
+			log.error("[ERROR]:No Such Element Exception["+nse.getMessage()+"]");
 		}
 		
 		
@@ -96,6 +97,6 @@ public class CartPage {
 		Thread.sleep(10000);
 	    confirmSignOut.click();
 		Thread.sleep(70000);
-		System.out.println("User logged out successfully");
+		log.info("User logged out successfully");
 	}
 }

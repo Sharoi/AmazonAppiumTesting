@@ -7,9 +7,11 @@ import static org.testng.Assert.assertFalse;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+
 
 import com.commerce.qa.base.AmazonAppService;
 import com.commerce.qa.pages.LoginPage;
@@ -33,7 +35,8 @@ public class LoginPageTest extends AmazonAppService {
     */
 	
 	@BeforeClass
-	public void setup() throws IOException, InterruptedException {			
+	public void setup() throws IOException, InterruptedException {	
+	
 		intializeAmazonApp();
 		this.loginObj = new LoginPage(appdriver);
 		appdriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);

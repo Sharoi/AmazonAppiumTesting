@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -23,7 +24,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class SearchPage {
-	
+	Logger log= Logger.getLogger(SearchPage.class);
 	WebElement desiredProduct;
 	String productName;
 	String productPrice;
@@ -66,6 +67,7 @@ public class SearchPage {
 		PageFactory.initElements(new AppiumFieldDecorator(this.appdriver), this);
 	}
 
+	//Product search method
 	public String searchProduct(String productToSearch) throws InterruptedException {
 
 		search.click();
@@ -73,12 +75,13 @@ public class SearchPage {
 		searchBox.sendKeys(productToSearch);
 		Thread.sleep(10000);
 		this.appdriver.pressKey(new KeyEvent(AndroidKey.ENTER));
-		System.out.println("Search Text [" + searchBox.getText() + "] After Click ");
+		log.info("Search Text [" + searchBox.getText() + "] After Click ");
 		String SearchProdName=searchBox.getText();
 		Thread.sleep(60000);		
 		return SearchProdName;
 	}
 	
+	//Fetching the product details for validation
 	public String getSelectedProductDetail ()  throws InterruptedException {
 		
 		try {			
@@ -90,7 +93,7 @@ public class SearchPage {
 			}
 		} catch (NoSuchElementException nsee) {
 			
-			System.out.println("Pincode of is already available.Continuing with product search" + nsee.getAdditionalInformation());
+			log.info("Pincode of is already available.Continuing with product search" + nsee.getAdditionalInformation());
 		}
 
 		try {
@@ -101,22 +104,23 @@ public class SearchPage {
 			}
 			AndroidElement productLayout =  productListInPage.get(tmpCount);	
 			this.productName=productLayout.findElement(By.id("com.amazon.mShop.android.shopping:id/item_title")).getText();			
-			System.out.println("Selected Product name "+ this.productName);
+			log.info("Selected Product name "+ this.productName);
 
 			List<MobileElement> insideLayout=productLayout.findElementsByXPath("//android.widget.TextView");
 			String[] parts = insideLayout.get(2).getText().split(Pattern.quote("."));
 			this.productPrice=parts[0].replaceAll("[^0-9]", "");
-			System.out.println("Selected Prod price "+  this.productPrice);
+			log.info("Selected Prod price "+  this.productPrice);
 			
 			productLayout.click();
 			Thread.sleep(50000);
 			
 		} catch (NoSuchElementException nsee) {
-			System.out.println("[ERROR] -- ProductLayout Element Not Found" + nsee.getStackTrace());
+			log.warn("[ERROR] -- ProductLayout Element Not Found" + nsee.getStackTrace());
 		}
 		return productName;
 	}
 	
+	//Adding the selected product to cart
 	public void fetchProductDetails(String ProductSearch) throws InterruptedException {
 		
 		searchProduct(ProductSearch);
@@ -128,7 +132,8 @@ public class SearchPage {
 		Thread.sleep(20000);
 		WebDriverWait wait = new WebDriverWait(appdriver, 90);
 		wait.until(ExpectedConditions.visibilityOf(clickDone));
-		clickDone.click();		
+		clickDone.click();	
+		
 		Thread.sleep(50000);
 	}
 	
@@ -139,7 +144,7 @@ public class SearchPage {
 	public String getselectedProductPrice() {
 		return this.productPrice;
 	}
-	
+	//search using the data from external data provider excel sheet
 	public void searchAllProduct(String ProductToSearch) throws InterruptedException {
 		search.click();
 		Thread.sleep(60000);
